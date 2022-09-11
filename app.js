@@ -1,6 +1,17 @@
 const http = require('http');
-const fs = require('fs');
-const routes=require('./routes');
+const express=require('express');
+const app=express();
+app.use((req,res,next)=>{
+    console.log('My name is Jatin Kumar');
+    //res.send('<h1>This is hello from express.js</h1>');
+    next();
 
-const server = http.createServer(routes);         
-server.listen(4000);
+});
+app.use((req,res,next)=>{
+    console.log('This is another app.use');
+    res.send('<h1>hello from another app.use</h1>');
+   // res.send( { 'key1': 'value' })
+    next();
+})
+const server = http.createServer(app);         
+app.listen(3000);
