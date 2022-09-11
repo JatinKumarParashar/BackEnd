@@ -1,4 +1,4 @@
-const http = require('http');
+
 const express=require('express');
 const app=express();
 app.use((req,res,next)=>{
@@ -13,5 +13,5 @@ app.use((req,res,next)=>{
    // res.send( { 'key1': 'value' })
     next();
 })
-const server = http.createServer(app);         
+      
 app.listen(3000);
