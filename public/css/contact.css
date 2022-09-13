@@ -1,0 +1,80 @@
+body {
+    box-sizing: content-box;
+}
+
+html {
+    background-image: url("https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/323725_1100-1100x628.jpg");
+}
+
+h1 {
+    color: orange;
+}
+
+#name {
+    width: 100%;
+}
+
+#email {
+    width: 100%;
+}
+
+#text {
+    width: 100%;
+}
+
+#date {
+    width: 50%;
+}
+
+#time {
+    width: 43%;
+}
+
+#button {
+    width: 100%;
+    background-color: orange;
+}
+
+#center {
+    margin: auto;
+    width: 50%;
+    border: 3px solid #73AD21;
+    padding: 10px;
+    background-color: white;
+}
+
+
+
+.main-header {
+    width: 100%;
+    height: 56px;
+    padding: 0 20px;
+    align-items: center;
+    
+}
+
+.main-header_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.main-header_nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+}
+
+.main-header_item a {
+    text-decoration: none;
+    color:black;
+    margin: 0 5px;
+}
+
+.main-header_item a:hover,
+.main-header_item a:active,
+.main-header_item a:active {
+    color: red;
+}

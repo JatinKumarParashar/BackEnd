@@ -1,0 +1,39 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    padding: 10px;
+}
+
+.main-header {
+    width: 50%;
+    height: 56px;
+    background-color: #d7d946;
+    padding: 0 20px;
+}
+
+.main-header_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.main-header_nav {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+}
+
+.main-header_item a {
+    text-decoration: none;
+    color: white;
+    margin: 0 5px;
+}
+
+.main-header_item a:hover,
+.main-header_item a:active,
+.main-header_item a:active {
+    color: red;
+}
