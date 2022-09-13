@@ -1,8 +1,8 @@
 const express=require('express');
 const path=require('path');
 const router = express.Router();
-const getContact=require('../controllers/contact');
+const formSuccess=require('../controllers/contact');
 
-router.get('/contactus',getContact.contact);
+router.use('/success',formSuccess.success);
 
 module.exports=router;
