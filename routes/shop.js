@@ -4,6 +4,6 @@ const getProduct=require('../controllers/product');
 const router = require('./admin');
 const routers = express.Router();
 
-routers.use('/',getProduct.getProducts);
+routers.get('/',getProduct.getProducts);
 //routers.use('/details',getProduct.postProduct);
 module.exports = routers;

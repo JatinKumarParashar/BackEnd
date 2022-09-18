@@ -17,15 +17,19 @@ exports.postAddProduct= (req, res, next) => {
 
 
 exports.getProducts= (req, res, next) => {
-    const product=Product.fetchAll();
-    res.sendFile(path.join(rootdir,'views','shop.html'));
+    Product.fetchAll(products=>{
+        res.sendFile(path.join(rootdir,'views','shop.html'));
+    });
+   
 }
 
-exports.postProduct=(req,res,next)=>{
-    const product=Product.fetchAll();
-    console.log(product);
-}
 
-exports.getCart=(req,res,next)=>{
-res.sendFile(path.join(rootdir,'views','cart.html'));
-}
+
+// exports.postProduct=(req,res,next)=>{
+//     const product=Product.fetchAll();
+//     console.log(product);
+// }
+
+// exports.getCart=(req,res,next)=>{
+// res.sendFile(path.join(rootdir,'views','cart.html'));
+// }
