@@ -46,13 +46,11 @@ exports.getProducts = (req, res, next) => {
   })
   }
 
+ 
 
 
-// exports.postProduct=(req,res,next)=>{
-//     const product=Product.fetchAll();
-//     console.log(product);
-// }
+exports.postProduct=(req,res,next)=>{
+    const product=Product.fetchAll();
+    console.log(product);
+}
 
-// exports.getCart=(req,res,next)=>{
-// res.sendFile(path.join(rootdir,'views','cart.html'));
-// }

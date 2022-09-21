@@ -6,5 +6,5 @@ exports.contact=(req,res,next)=>{
 }
 
 exports.success=(req, res, next) => {
-    res.sendFile(path.join(rootdir,'views', 'success.html'));
+    res.sendFile(path.join(rootdir,'views', 'success.ejs'));
 }
