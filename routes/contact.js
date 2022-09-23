@@ -1,8 +1,8 @@
-const express=require('express');
-const path=require('path');
+const express = require('express');
+const path = require('path');
 const router = express.Router();
-const getContact=require('../controllers/contact');
+const getContact = require('../controllers/contact');
 
-router.get('/contactus',getContact.contact);
+router.get('/contactus', getContact.contact);
 
-module.exports=router;
+module.exports = router;

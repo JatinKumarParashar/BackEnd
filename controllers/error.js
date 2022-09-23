@@ -1,5 +1,5 @@
-const path=require('path');
+const path = require('path');
 
-exports.error404=(req, res, next) => {
-    res.status(404).sendFile(path.join(__dirname,'../', 'views', 'err404.html'));
+exports.error404 = (req, res, next) => {
+    res.status(404).sendFile(path.join(__dirname, '../', 'views', 'err404.html'));
 }

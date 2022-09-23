@@ -10,14 +10,14 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-const err=require('./controllers/error');
+const err = require('./controllers/error');
 
-const contactRoutes=require('./routes/contact');
-const successRoutes=require('./routes/success');
- const cartRoutes=require('./routes/cart');
+const contactRoutes = require('./routes/contact');
+const successRoutes = require('./routes/success');
+const cartRoutes = require('./routes/cart');
 
-const loginRoutes=require('./routes/login');
-const messageRoutes=require('./routes/message');
+const loginRoutes = require('./routes/login');
+const messageRoutes = require('./routes/message');
 
 app.use(bodyParsed.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -25,13 +25,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/admin', adminRoutes);
-app.use('/shop',shopRoutes);
+app.use('/shop', shopRoutes);
 
 
 app.use(contactRoutes);
 app.use(successRoutes);
- app.use(cartRoutes);
- app.use(err.error404);
+app.use(cartRoutes);
+app.use(err.error404);
 app.listen(3000);
 
 

@@ -18,12 +18,15 @@
                 <li class="main-header_item"><a href="/admin/add-product">Add Product</a></li>
                 <li class="main-header_item"><a href="/contactus">ContactUs</a></li>
                 <li class="main-header_item"><a href="/cart">Cart</a></li>
+                <li class="main-header_item"><a href="/admin/product">Admin</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="centered">
-        <h1><%= product.title %></h1>
+        <h1>
+            <%= product.title %>
+        </h1>
         <hr>
         <div>
             <img src="<%= product.image %>" alt="<%= product.title %>">

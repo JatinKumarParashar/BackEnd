@@ -22,16 +22,24 @@
             </ul>
         </nav>
     </header>
-    <form class="product-form" action="/admin/add-product" method="POST">
+    <form class="product-form" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>"
+        method="POST">
         <div class="form-control">
             <label for="title">Title :</label>
-            <input type="text" name="title" id="title" required>
+            <input type="text" value="<% if (editing) { %><%= product.title %><% } %>" name="title" id="title" required>
             <label for="image">URL for image</label>
-            <input type="text" name="image" id="image" required>
-            <!-- <label for="number">Size:</label>
-            <input type="size" name="number" id="number" /> -->
+            <input type="text" name="image" value="<% if (editing) { %><%= product.image %><% } %>" id="image" required>
+            <% if(editing){ %>
+                <input type="hidden" value="<%=product.id %>" name="productId">
+                <% } %>
         </div>
-        <button type="submit">Add Product</button>
+        <button type="submit">
+            <% if (editing) { %>
+                Update Product
+                <% } else { %>
+                    Add Product
+                    <% } %>
+        </button>
     </form>
 </body>
 
