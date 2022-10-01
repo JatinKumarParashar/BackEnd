@@ -8,9 +8,6 @@ exports.getAddProduct = (req, res, next) => {
   res.render('edit-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
-    formsCSS: true,
-    productCSS: true,
-    activeAddProduct: true,
     editing: false
   });
 };
@@ -21,15 +18,23 @@ exports.postAddProduct = (req, res, next) => {
   // const price = req.body.price;
   // const description = req.body.description;
   const product = new Product(null, title, image/*, description, price*/);
-  product.save();
-  res.redirect('/shop');
+  product.save().then(()=>{
+    res.redirect('/shop');
+  }).catch((err)=>{
+    console.log(err);
+  })
+  
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const id = req.params.productId;
   console.log(id);
-  Product.deleteProduct(id);
-  res.redirect('/shop');
+  Product.deleteProduct(id).then(()=>{
+    res.redirect('/shop');
+  }).catch((err)=>{
+    console.log(err);
+  })
+ 
 }
 
 exports.postEditProduct = (req, res, next) => {
@@ -45,10 +50,6 @@ exports.postEditProduct = (req, res, next) => {
 }
 
 exports.getEditProduct = (req, res, next) => {
-  //  const editMode = req.query.edit;
-  // // if (!editMode) {
-  // //   return res.redirect('/contactus');
-  // // }
   const prodId = req.params.productId;
   console.log(prodId);
   Product.findById(prodId, product => {
@@ -65,34 +66,40 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll(products => {
+  Product.fetchAll().then(([rows,fileData])=>{
     res.render('shop', {
-      prods: products,
+      prods: rows,
       pageTitle: 'All Products',
       path: '/shop'
-    });
-  });
+    })
+  }).catch((err)=>{
+    console.log(err);
+  })
+ 
 };
 
 
 exports.getProduct = (req, res, next) => {
-  Product.fetchAll(products => {
+  Product.fetchAll().then(([rows,fileData])=>{
     res.render('products', {
-      prods: products,
+      prods: rows,
       pageTitle: 'All Products',
       path: '/shop'
-    });
-  });
+    })
+  }).catch((err)=>{
+    console.log(err);
+  })
 };
 
 exports.getDetails = (req, res, next) => {
   console.log(req.params.productId);
-  Product.findById(req.params.productId, product => {
+  Product.findById(req.params.productId).then(([row,fileData])=>{
     res.render('details', {
-      product: product,
-      //pageTitle: product.title,
+      product: row[0],
       path: '/shop'
     })
+  }).catch((err)=>{
+    console.log(err);
   })
 }
 
@@ -101,8 +108,8 @@ exports.getDetails = (req, res, next) => {
 
 
 
-exports.postProduct = (req, res, next) => {
-  const product = Product.fetchAll();
-  console.log(product);
-}
+// exports.postProduct = (req, res, next) => {
+//   const product = Product.fetchAll();
+//   console.log(product);
+// }
 
