@@ -1,6 +1,5 @@
-const express = require('express');
-const path = require('path');
-const rootdir = require('../util/path');
+
+const { where } = require('sequelize');
 const Product = require('../models/product');
 
 
@@ -17,24 +16,30 @@ exports.postAddProduct = (req, res, next) => {
   const image = req.body.image;
   // const price = req.body.price;
   // const description = req.body.description;
-  const product = new Product(null, title, image/*, description, price*/);
-  product.save().then(()=>{
+  Product.create({
+    title: title,
+    image: image
+  }).then(result => {
+    // console.log(result);
+    console.log('created product');
     res.redirect('/shop');
-  }).catch((err)=>{
-    console.log(err);
-  })
-  
+  }).catch(err => console.log(err));
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const id = req.params.productId;
   console.log(id);
-  Product.deleteProduct(id).then(()=>{
-    res.redirect('/shop');
-  }).catch((err)=>{
-    console.log(err);
+  Product.findByPk(id).then((product) => {
+    return product.destroy(product);
+
   })
- 
+    .then(result => {
+      res.redirect('/admin/product');
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+
 }
 
 exports.postEditProduct = (req, res, next) => {
@@ -44,15 +49,23 @@ exports.postEditProduct = (req, res, next) => {
   console.log(id);
   // const price = req.body.price;
   // const description = req.body.description;
-  const product = new Product(id, title, image/*, description, price*/);
-  product.save();
-  res.redirect('/shop');
+
+  Product.findByPk(id).then(product => {
+    product.title = title;
+    product.image = image;
+    return product.save();
+  })
+    .then(() => {
+      res.redirect('/shop');
+    })
+    .catch(err => console.log(err));
+
 }
 
 exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
   console.log(prodId);
-  Product.findById(prodId, product => {
+  Product.findByPk(prodId).then((product) => {
     if (!product) {
       return res.redirect('/');
     }
@@ -62,46 +75,50 @@ exports.getEditProduct = (req, res, next) => {
       editing: true,
       product: product
     });
-  });
+  }).catch(err => console.log(err));
+
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll().then(([rows,fileData])=>{
+  Product.findAll().then(rows => {
     res.render('shop', {
       prods: rows,
       pageTitle: 'All Products',
       path: '/shop'
     })
-  }).catch((err)=>{
+  }).catch((err) => {
     console.log(err);
   })
- 
+
 };
 
 
 exports.getProduct = (req, res, next) => {
-  Product.fetchAll().then(([rows,fileData])=>{
+  Product.findAll().then(rows => {
     res.render('products', {
       prods: rows,
       pageTitle: 'All Products',
       path: '/shop'
     })
-  }).catch((err)=>{
+  }).catch((err) => {
     console.log(err);
   })
 };
 
 exports.getDetails = (req, res, next) => {
-  console.log(req.params.productId);
-  Product.findById(req.params.productId).then(([row,fileData])=>{
+  var id = req.params.productId;
+  Product.findByPk(id).then((row) => {
     res.render('details', {
-      product: row[0],
+      product: row,
       path: '/shop'
     })
-  }).catch((err)=>{
+  }).catch((err) => {
     console.log(err);
   })
+
+
 }
+  //Product.findById(
 
 
 

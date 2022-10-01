@@ -3,7 +3,7 @@ const bodyParsed = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 
-const db=require('./util/database');
+const sequelize = require('./util/database');
 
 const app = express();
 
@@ -34,7 +34,13 @@ app.use(contactRoutes);
 app.use(successRoutes);
 app.use(cartRoutes);
 app.use(err.error404);
-app.listen(3000);
+
+sequelize.sync().then((result) => {
+    // console.log(result);
+    app.listen(3000);
+}).catch(err => { console.log(err) })
+
+
 
 
 
