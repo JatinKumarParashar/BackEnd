@@ -2,10 +2,12 @@ const express = require('express');
 const bodyParsed = require('body-parser');
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 
 const sequelize = require('./util/database');
 
 const app = express();
+app.use(cors());
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -17,18 +19,26 @@ const err = require('./controllers/error');
 const contactRoutes = require('./routes/contact');
 const successRoutes = require('./routes/success');
 const cartRoutes = require('./routes/cart');
+const bookingRoutes = require('./routes/booking');
+const expenceRoutes = require('./routes/Expence');
 
 const loginRoutes = require('./routes/login');
 const messageRoutes = require('./routes/message');
 
-app.use(bodyParsed.urlencoded({ extended: false }));
+app.use(bodyParsed.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const users = require('./models/booking');
+const Expence = require('./models/expence');
 
+// const bodyParser = require('body-parser');
 
 app.use('/admin', adminRoutes);
 app.use('/shop', shopRoutes);
 
+
+app.use('/booking', bookingRoutes);
+app.use('/expence', expenceRoutes);
 
 app.use(contactRoutes);
 app.use(successRoutes);
