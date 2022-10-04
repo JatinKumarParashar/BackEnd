@@ -38,7 +38,7 @@ app.use('/shop', shopRoutes);
 
 
 app.use('/booking', bookingRoutes);
-app.use('/expence', expenceRoutes);
+app.use('/expence', expenceRoutes);    
 
 app.use(contactRoutes);
 app.use(successRoutes);
