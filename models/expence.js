@@ -1,3 +1,4 @@
+
 const Sequelize = require('sequelize');
 
 const sequelize = require('../util/database');
@@ -29,3 +30,4 @@ const Expence = sequelize.define('expence', {
 })
 
 module.exports = Expence;
+

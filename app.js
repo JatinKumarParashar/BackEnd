@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
+
 const sequelize = require('./util/database');
 
 const app = express();
@@ -25,30 +26,70 @@ const expenceRoutes = require('./routes/Expence');
 const loginRoutes = require('./routes/login');
 const messageRoutes = require('./routes/message');
 
-app.use(bodyParsed.json());
+// app.use(bodyParsed.json());
+app.use(bodyParsed.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 const users = require('./models/booking');
 const Expence = require('./models/expence');
-
+const Product = require('./models/product');
+const User = require('./models/customer');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cartItem');
+const { BelongsToMany } = require('sequelize');
 // const bodyParser = require('body-parser');
 
+
+app.use((req, res, next) => {
+    User.findByPk(1)
+        .then(customer => {
+            req.customer = customer;
+            console.log('123', customer);
+            next();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+})
 app.use('/admin', adminRoutes);
 app.use('/shop', shopRoutes);
 
 
 app.use('/booking', bookingRoutes);
-app.use('/expence', expenceRoutes);    
+app.use('/expence', expenceRoutes);
+
 
 app.use(contactRoutes);
 app.use(successRoutes);
 app.use(cartRoutes);
 app.use(err.error404);
 
-sequelize.sync().then((result) => {
-    // console.log(result);
-    app.listen(3000);
-}).catch(err => { console.log(err) })
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product,{ through : CartItem});
+Product.belongsToMany(Cart,{ through : CartItem});
+
+sequelize.sync()
+    .then((result) => {
+        // console.log(result);
+        return User.findByPk(1);
+
+    }).then(user => {
+        if (!user) {
+            return User.create({ name: 'Jatin', email: 'jatin@gmail.com' });
+        }
+        return user;
+    }).then(user => {
+        //console.log(user);
+        return user.createCart();
+        
+    }).then(cart=>{
+        app.listen(3000);
+    })
+    .catch(err => { console.log(err) });
 
 
 

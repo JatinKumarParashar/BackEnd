@@ -16,20 +16,27 @@ exports.postAddProduct = (req, res, next) => {
   const image = req.body.image;
   // const price = req.body.price;
   // const description = req.body.description;
-  Product.create({
+
+  console.log('Jatin Kumar parashar');
+  console.log('123', req.customer.id);
+  req.customer
+  .createProduct({
     title: title,
-    image: image
-  }).then(result => {
-    // console.log(result);
-    console.log('created product');
-    res.redirect('/shop');
-  }).catch(err => console.log(err));
+    image: image,
+
+  })
+    .then(result => {
+      // console.log(result);
+      console.log('created product');
+      res.redirect('/shop');
+    }).catch(err => res.json(err));
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const id = req.params.productId;
   console.log(id);
-  Product.findByPk(id).then((product) => {
+  Product.findByPk(id)
+  .then((product) => {
     return product.destroy(product);
 
   })
@@ -65,7 +72,10 @@ exports.postEditProduct = (req, res, next) => {
 exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
   console.log(prodId);
-  Product.findByPk(prodId).then((product) => {
+  req.customer
+  .getProducts({where:{id:prodId}})
+  .then((products) => {
+    const product=products[0]
     if (!product) {
       return res.redirect('/');
     }
@@ -81,6 +91,7 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.findAll().then(rows => {
+
     res.render('shop', {
       prods: rows,
       pageTitle: 'All Products',
@@ -94,7 +105,9 @@ exports.getProducts = (req, res, next) => {
 
 
 exports.getProduct = (req, res, next) => {
-  Product.findAll().then(rows => {
+  req.customer
+  .getProducts()
+  .then(rows => {
     res.render('products', {
       prods: rows,
       pageTitle: 'All Products',

@@ -23,7 +23,26 @@
         </nav>
     </header>
 
-    <h1>Product hans been carted</h1>
+    <h1>My Cart</h1>
+    <% if (prods.length> 0) { %>
+        <% for (let product of prods) { %>
+            <article id="article">
+                <div class="card__image" id="add_product">
+                    <img id="img" src="<%= product.image %>" alt="<%=product.title%>"><br>
+                    <span id="b">
+                        <%= product.title %>
+                    </span>
+                    <h2>Quantity: <%= product.cartItem.quantity %></h2>
+                    <form action="/cart/delete-item" method="POST">
+                        <input type="hidden" value="<%= product.id %>" name="productId">
+                        <button class="btn danger" type="submit">Delete</button>
+                    </form>
+                </div>
+            </article>
+            <% } %>
+                <% } else { %>
+                    <h1>No Products Found!</h1>
+                    <% } %>
 
 </body>
 

@@ -9,11 +9,11 @@ const Product = sequelize.define('products', {
         primaryKey: true,
         allowNull: false
     },
-    title: Sequelize.STRING,
+    title: Sequelize.STRING,  
     image: {
         type: Sequelize.TEXT,
         allowNull: false
     }
 })
 
-module.exports=Product;
+module.exports = Product;
