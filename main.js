@@ -1,12 +1,14 @@
-const imgs=document.getElementById('imgs');
+const container=document.getElementById('container');
+const img=document.querySelector('img');
 
-const img=document.querySelectorAll('#imgs img');
-let index=0;
-function carousel(){
-index++;
-if(index>=img.length){
-    index=0;
-}
-imgs.style.transform=`translateX(${-index*500}px)`;
-}
-setInterval(carousel,1000);
+container.addEventListener('mousemove',(e)=>{
+    const x=e.clientX-e.target.offsetLeft;
+    const y=e.clientY-e.target.offsetTop;
+    img.style.transformOrigin=`${x}px ${y}px`;
+    img.style.transform='scale(2)';
+});
+
+container.addEventListener('mouseleave',(e)=>{
+    img.style.transformOrigin = "center center";
+    img.style.transform = "scale(1)";
+});
