@@ -1,14 +1,10 @@
-const text='This is auto Text Writer which write Text automatic';
+const open=document.getElementById('open');
+const close=document.getElementById('close');
+const container=document.getElementById('container');
 
-
-let index=0;
- function writeText(){
-    document.body.innerText=text.slice(0,index);
-    index++;
-    if(index>text.length)
-    {
-        index=0;
-    }
- }
-
- setInterval(writeText,100);
+open.addEventListener('click',()=>{
+    container.classList.add('active');
+})
+close.addEventListener('click',()=>{
+    container.classList.remove('active');
+})
