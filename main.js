@@ -1,16 +1,14 @@
-const btn = document.getElementById("btn");
-const container=document.getElementById('container');
+const text='This is auto Text Writer which write Text automatic';
 
-btn.addEventListener("click", () => {
-    creatNotification();
-});
 
-function creatNotification(){
-const notif=document.createElement('div');
-notif.classList.add('toast');
-notif.innerText='This is Notification';
-container.appendChild(notif);
-setTimeout(()=>{
-    notif.remove();
-},3000);
-}
+let index=0;
+ function writeText(){
+    document.body.innerText=text.slice(0,index);
+    index++;
+    if(index>text.length)
+    {
+        index=0;
+    }
+ }
+
+ setInterval(writeText,100);
