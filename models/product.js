@@ -13,6 +13,10 @@ const Product = sequelize.define('products', {
     image: {
         type: Sequelize.TEXT,
         allowNull: false
+    },
+    price:{
+        type:Sequelize.INTEGER,
+        allowNull:false
     }
 })
 

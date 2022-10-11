@@ -29,6 +29,8 @@
             <input type="text" value="<% if (editing) { %><%= product.title %><% } %>" name="title" id="title" required>
             <label for="image">URL for image</label>
             <input type="text" name="image" value="<% if (editing) { %><%= product.image %><% } %>" id="image" required>
+            <label for="number">Price:</label>
+            <input type="number" name="price" id="price" value="<% if (editing) { %><%= product.price %><% } %>"/>
             <% if(editing){ %>
                 <input type="hidden" value="<%=product.id %>" name="productId">
                 <% } %>

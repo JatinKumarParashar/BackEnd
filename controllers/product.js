@@ -14,7 +14,7 @@ exports.getAddProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
   const image = req.body.image;
-  // const price = req.body.price;
+  const price = req.body.price;
   // const description = req.body.description;
 
   console.log('Jatin Kumar parashar');
@@ -23,6 +23,7 @@ exports.postAddProduct = (req, res, next) => {
   .createProduct({
     title: title,
     image: image,
+    price: price
 
   })
     .then(result => {
@@ -91,12 +92,12 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.findAll().then(rows => {
-
+    //res.json(rows);
     res.render('shop', {
       prods: rows,
       pageTitle: 'All Products',
       path: '/shop'
-    })
+   })
   }).catch((err) => {
     console.log(err);
   })
