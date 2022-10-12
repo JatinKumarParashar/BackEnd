@@ -36,7 +36,7 @@ exports.postCart = (req, res, next) => {
     })
     .then((product) => {
       res.status(206).json(product);
-     //res.redirect('/shop');
+     //res.redirect('/cart');
     })
     .catch(err => console.log(err));
 };
@@ -62,8 +62,18 @@ exports.getCart = (req, res, next) => {
 
 exports.deleteCart=(req,res,next)=>{
   const prodId = req.body.productId;
-  Product.findByPk(prodId, product => {
-    Cart.deleteProduct(prodId,product.title);
-    res.redirect('/cart');
-  });
+  req.customer
+  .getCart()
+  .then(cart => {
+    return cart.getProducts({ where: { id: prodId } });
+  })
+  .then(products => {
+    const product = products[0];
+    return product.cartItem.destroy();
+  })
+  .then(result => {
+    //res.redirect('/cart');
+    res.status(201).json(result);
+  })
+  .catch(err => console.log(err));
 }
