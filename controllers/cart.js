@@ -24,6 +24,7 @@ exports.postCart = (req, res, next) => {
       if (product) {
         const oldQuantity = product.cartItem.quantity;
         newQuantity = oldQuantity;
+        console.log('this product is alredy in cart');
         return product;
       }
       return Product.findByPk(prodId);
@@ -33,8 +34,9 @@ exports.postCart = (req, res, next) => {
         through: { quantity: newQuantity }
       });
     })
-    .then(() => {
-     res.redirect('/cart');
+    .then((product) => {
+      res.status(206).json(product);
+     //res.redirect('/shop');
     })
     .catch(err => console.log(err));
 };
@@ -46,10 +48,11 @@ exports.getCart = (req, res, next) => {
     return cart
       .getProducts()
       .then(products => {
-        res.render('cart', {
-          path: '/cart',
-          prods: products
-        });
+        res.status(202).json(products);
+        // res.render('cart', {
+        //   path: '/cart',
+        //   prods: products
+        // });
       })
       .catch(err => console.log(err));
   })

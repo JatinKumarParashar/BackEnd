@@ -92,12 +92,12 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.findAll().then(rows => {
-    //res.json(rows);
-    res.render('shop', {
-      prods: rows,
-      pageTitle: 'All Products',
-      path: '/shop'
-   })
+    res.json(rows);
+  //   res.render('shop', {
+  //     prods: rows,
+  //     pageTitle: 'All Products',
+  //     path: '/shop'
+  //  })
   }).catch((err) => {
     console.log(err);
   })

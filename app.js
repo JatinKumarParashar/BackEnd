@@ -26,8 +26,8 @@ const expenceRoutes = require('./routes/Expence');
 const loginRoutes = require('./routes/login');
 const messageRoutes = require('./routes/message');
 
-// app.use(bodyParsed.json());
-app.use(bodyParsed.urlencoded({ extended: false }));
+ app.use(bodyParsed.json());
+  //app.use(bodyParsed.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
