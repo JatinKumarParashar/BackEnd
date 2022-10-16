@@ -1,6 +1,8 @@
 
 const { where } = require('sequelize');
 const Product = require('../models/product');
+const ITEM_PER_PAGE = 2;
+
 
 
 exports.getAddProduct = (req, res, next) => {
@@ -20,12 +22,12 @@ exports.postAddProduct = (req, res, next) => {
   console.log('Jatin Kumar parashar');
   console.log('123', req.customer.id);
   req.customer
-  .createProduct({
-    title: title,
-    image: image,
-    price: price
+    .createProduct({
+      title: title,
+      image: image,
+      price: price
 
-  })
+    })
     .then(result => {
       // console.log(result);
       console.log('created product');
@@ -37,10 +39,10 @@ exports.postDeleteProduct = (req, res, next) => {
   const id = req.params.productId;
   console.log(id);
   Product.findByPk(id)
-  .then((product) => {
-    return product.destroy(product);
+    .then((product) => {
+      return product.destroy(product);
 
-  })
+    })
     .then(result => {
       res.redirect('/admin/product');
     })
@@ -74,49 +76,71 @@ exports.getEditProduct = (req, res, next) => {
   const prodId = req.params.productId;
   console.log(prodId);
   req.customer
-  .getProducts({where:{id:prodId}})
-  .then((products) => {
-    const product=products[0]
-    if (!product) {
-      return res.redirect('/');
-    }
-    res.render('edit-product', {
-      pageTitle: 'Edit Product',
-      path: '/admin/edit-product',
-      editing: true,
-      product: product
-    });
-  }).catch(err => console.log(err));
+    .getProducts({ where: { id: prodId } })
+    .then((products) => {
+      const product = products[0]
+      if (!product) {
+        return res.redirect('/');
+      }
+      res.render('edit-product', {
+        pageTitle: 'Edit Product',
+        path: '/admin/edit-product',
+        editing: true,
+        product: product
+      });
+    }).catch(err => console.log(err));
 
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll().then(rows => {
-    res.json(rows);
-  //   res.render('shop', {
-  //     prods: rows,
-  //     pageTitle: 'All Products',
-  //     path: '/shop'
-  //  })
-  }).catch((err) => {
-    console.log(err);
-  })
+  const page=+req.query.page;
+  console.log('checking page',page);
+  let totalItems;
+  Product.count()
+    .then(total => {
+      totalItems = total;
+      return Product.findAll({
+        offset:(page-1)*ITEM_PER_PAGE,
+        limit:ITEM_PER_PAGE
+      })
+       
+    })
+
+    .then(products => {
+      res.json({
+        products:products,
+        totalProducts: totalItems,
+        currentPage:page,
+        hasNextPage: ITEM_PER_PAGE * page < totalItems,
+        nextPage: page + 1,
+        hasPreviousPage: page > 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEM_PER_PAGE)
+      });
+      //   res.render('shop', {
+      //     prods: rows,
+      //     pageTitle: 'All Products',
+      //     path: '/shop'
+      //  })
+    }).catch((err) => {
+      console.log(err);
+    })
 
 };
 
 
 exports.getProduct = (req, res, next) => {
   req.customer
-  .getProducts()
-  .then(rows => {
-    res.render('products', {
-      prods: rows,
-      pageTitle: 'All Products',
-      path: '/shop'
+    .getProducts()
+    .then(rows => {
+      res.render('products', {
+        prods: rows,
+        pageTitle: 'All Products',
+        path: '/shop'
+      })
+    }).catch((err) => {
+      console.log(err);
     })
-  }).catch((err) => {
-    console.log(err);
-  })
 };
 
 exports.getDetails = (req, res, next) => {

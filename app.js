@@ -25,6 +25,7 @@ const expenceRoutes = require('./routes/Expence');
 
 const loginRoutes = require('./routes/login');
 const messageRoutes = require('./routes/message');
+const orderRoutes=require('./routes/order');
 
  app.use(bodyParsed.json());
   app.use(bodyParsed.urlencoded({ extended: false }));
@@ -37,6 +38,8 @@ const Product = require('./models/product');
 const User = require('./models/customer');
 const Cart = require('./models/cart');
 const CartItem = require('./models/cartItem');
+const Order = require('./models/order');
+const OrderItem = require('./models/orderItem');
 const { BelongsToMany } = require('sequelize');
 // const bodyParser = require('body-parser');
 
@@ -75,7 +78,7 @@ app.post('/',(req,res,next)=>{
     })
  })
 
-
+app.use(orderRoutes);
 app.use(contactRoutes);
 app.use(successRoutes);
 app.use(cartRoutes);
@@ -87,9 +90,13 @@ User.hasOne(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Product,{ through : CartItem});
 Product.belongsToMany(Cart,{ through : CartItem});
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product,{through:OrderItem});
+Product.belongsToMany(Order,{through:OrderItem});
 
 sequelize //.sync({force:true})
-           .sync()
+          .sync()
     .then((result) => {
         // console.log(result);
         return User.findByPk(1);
