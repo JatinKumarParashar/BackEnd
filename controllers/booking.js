@@ -3,7 +3,6 @@ const { where } = require('sequelize');
 const User = require('../models/booking');
 
 exports.postUser=async (req,res,next)=>{
-  console.log('123',req.query.username);
    const username=req.body.username;
    const number=req.body.number;
    const email=req.body.email;
@@ -33,6 +32,7 @@ exports.getUser=(req,res,next)=>{
       })
       .then(result => {
         console.log('user has been deleted');
+        res.status(201).json(result);
       })
       .catch((err) => {
         console.log(err);

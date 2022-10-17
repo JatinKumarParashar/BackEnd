@@ -4,10 +4,12 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 
-
+const dotenv=require('dotenv');
+dotenv.config();
+const app = express();
 const sequelize = require('./util/database');
 
-const app = express();
+
 app.use(cors());
 
 app.set('view engine', 'ejs');
