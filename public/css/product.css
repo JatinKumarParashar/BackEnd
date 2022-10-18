@@ -57,9 +57,11 @@ button {
     border-radius: 3px;
     cursor: pointer;
 }
-.form-control{
+
+.form-control {
     margin: 2px 0;
 }
+
 button:hover,
 button:active {
     background-color: #d7d946;

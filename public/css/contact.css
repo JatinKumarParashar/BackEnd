@@ -50,7 +50,7 @@ h1 {
     height: 56px;
     padding: 0 20px;
     align-items: center;
-    
+
 }
 
 .main-header_list {
@@ -69,7 +69,7 @@ h1 {
 
 .main-header_item a {
     text-decoration: none;
-    color:black;
+    color: black;
     margin: 0 5px;
 }
 

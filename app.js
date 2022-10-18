@@ -84,6 +84,10 @@ app.use(orderRoutes);
 app.use(contactRoutes);
 app.use(successRoutes);
 app.use(cartRoutes);
+app.use((req,res,next)=>{
+    console.log('req,url checking ',req.url);
+    res.sendFile(path.join(__dirname,`public/${req.url}`));
+})
 app.use(err.error404);
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
